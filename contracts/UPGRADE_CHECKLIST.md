@@ -305,4 +305,85 @@ soroban contract invoke --id $CONTRACT_ID --fn get_upgrade_history
 
 ---
 
+## Oracle-Gated Migration Checklist
+
+Use this additional checklist when migrating contracts to oracle-gated writes.
+
+### Pre-Migration Planning
+- [ ] Review oracle-network contract deployment status
+- [ ] Verify oracle nodes are operational
+- [ ] Confirm quorum threshold can be met
+- [ ] Test oracle integration in development environment
+- [ ] Identify all write functions to be oracle-gated
+- [ ] Design fallback mechanism for oracle unavailability
+- [ ] Plan data migration if needed
+
+### Oracle Integration Development
+- [ ] Add oracle-network contract dependency
+- [ ] Implement oracle result verification logic
+- [ ] Add model hash binding to write functions
+- [ ] Implement retry logic for oracle failures
+- [ ] Add event emission for oracle-gated writes
+- [ ] Update function access controls
+- [ ] Add oracle-specific error handling
+
+### Testing
+- [ ] Unit tests for oracle integration
+- [ ] Integration tests with oracle-network contract
+- [ ] Test oracle failure scenarios
+- [ ] Test fallback mechanisms
+- [ ] Test model hash verification
+- [ ] Test event emissions
+- [ ] Load testing with oracle delays
+- [ ] Security review of oracle integration
+
+### Deployment Preparation
+- [ ] Oracle-network contract deployed and verified
+- [ ] Minimum number of oracle nodes registered
+- [ ] Model versions approved by governance
+- [ ] Backend event reconciliation configured
+- [ ] Monitoring for oracle events set up
+- [ ] Alert thresholds configured
+
+### Migration Execution
+- [ ] Deploy updated contract
+- [ ] Verify oracle integration working
+- [ ] Test oracle-gated writes
+- [ ] Monitor oracle event reconciliation
+- [ ] Verify fallback mechanisms
+- [ ] Check event emissions
+- [ ] Monitor for errors
+
+### Post-Migration Verification
+- [ ] Verify all oracle-gated writes working
+- [ ] Check oracle event reconciliation lag
+- [ ] Verify model hash bindings
+- [ ] Monitor oracle node participation
+- [ ] Check dispute rates
+- [ ] Verify fallback mechanisms not triggered
+- [ ] Collect performance metrics
+
+### Rollback Planning
+- [ ] Document rollback procedure
+- [ ] Test rollback to non-oracle-gated version
+- [ ] Verify data consistency after rollback
+- [ ] Plan communication for rollback
+
+### Oracle Network Monitoring
+- [ ] Monitor oracle node availability
+- [ ] Track submission variance
+- [ ] Monitor dispute rates
+- [ ] Track oracle response times
+- [ ] Monitor slashing events
+- [ ] Check reputation changes
+
+### Communication
+- [ ] Notify users of oracle-gated migration
+- [ ] Document expected behavior changes
+- [ ] Provide migration timeline
+- [ ] Explain fallback mechanisms
+- [ ] Update user documentation
+
+---
+
 **Remember:** When in doubt, don't upgrade. It's better to delay than to rush and cause issues.

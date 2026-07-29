@@ -21,6 +21,7 @@ Recommended tooling for Soroban/Rust:
 - `contracts/fraud-detect`
 - `contracts/governance`
 - `contracts/common-utils`
+- `contracts/oracle-network`
 
 ## Findings Summary
 
@@ -62,6 +63,40 @@ Recommended tooling for Soroban/Rust:
   - `panic!` is acceptable but should not leak sensitive operational information.
   - Prefer consistent error strategy where possible.
 
+### F-05: Oracle-Network commit-reveal timing attacks
+
+- Severity: Medium
+- Status: Mitigated
+- Component: `contracts/oracle-network`
+- Notes:
+  - Commit-reveal scheme prevents front-running and copying attacks
+  - Strict time windows enforced for commit and reveal phases
+  - Late reveals are automatically rejected
+  - See `docs/oracle-network/threat-model.md` for detailed analysis
+
+### F-06: Oracle-Network dishonest majority attacks
+
+- Severity: High
+- Status: Mitigated by economic incentives
+- Component: `contracts/oracle-network`
+- Notes:
+  - Median aggregation resists outliers from dishonest nodes
+  - Variance threshold triggers disputes on high variance
+  - Economic penalties (slashing) make attacks expensive
+  - Reputation system tracks long-term node reliability
+  - See `docs/oracle-network/economic-security.md` for cost analysis
+
+### F-07: Oracle-Network sybil attacks
+
+- Severity: High
+- Status: Mitigated by staking requirements
+- Component: `contracts/oracle-network`
+- Notes:
+  - Minimum stake requirement (1M tokens) makes sybil attacks expensive
+  - Reputation system gives new nodes lower weight
+  - Quorum threshold requires minimum independent nodes
+  - See `docs/oracle-network/threat-model.md` for threat analysis
+
 ## Positive Observations
 
 - Widespread use of `require_auth` patterns.
@@ -75,6 +110,8 @@ Recommended tooling for Soroban/Rust:
   - Edge cases for numeric bounds and overflow-safe arithmetic
   - Governance lifecycle state transitions
   - Upgrade execution gating
+  - Oracle-network adversarial scenarios (dishonest majority, late reveals)
+  - Oracle-network economic security assumptions
 
 ## Out of Scope
 
