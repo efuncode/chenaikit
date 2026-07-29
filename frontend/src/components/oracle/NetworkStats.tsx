@@ -93,7 +93,7 @@ const NetworkStats: React.FC = () => {
   ];
 
   return (
-    <Grid container spacing={3} sx={{ mb: 3 }}>
+    <Grid container spacing={3} sx={{ mb: 3 }} role="region" aria-label={t('oracleNetwork.networkStats.title')}>
       {statCards.map((card, index) => (
         <Grid item xs={12} sm={6} md={2} key={index}>
           <Card
@@ -105,6 +105,8 @@ const NetworkStats: React.FC = () => {
                 boxShadow: theme.shadows[4],
               },
             }}
+            role="article"
+            aria-label={`${card.title}: ${card.value}`}
           >
             <CardContent>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
@@ -116,14 +118,20 @@ const NetworkStats: React.FC = () => {
                     color: card.color,
                     mr: 2,
                   }}
+                  aria-hidden="true"
                 >
                   {card.icon}
                 </Box>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" color="text.secondary" id={`stat-title-${index}`}>
                   {card.title}
                 </Typography>
               </Box>
-              <Typography variant="h4" component="div" fontWeight="bold">
+              <Typography 
+                variant="h4" 
+                component="div" 
+                fontWeight="bold"
+                aria-labelledby={`stat-title-${index}`}
+              >
                 {card.value}
               </Typography>
             </CardContent>

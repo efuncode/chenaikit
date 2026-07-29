@@ -87,25 +87,28 @@ const LiveSubmissionFeed: React.FC = () => {
   const submissions = activity?.submissions || [];
 
   return (
-    <Box>
+    <Box role="region" aria-label={t('oracleNetwork.liveFeed.title')}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6">{t('oracleNetwork.liveFeed.title')}</Typography>
+        <Typography variant="h6" id="live-feed-title">{t('oracleNetwork.liveFeed.title')}</Typography>
         <Chip
           label={autoRefresh ? t('oracleNetwork.liveFeed.autoRefreshOn') : t('oracleNetwork.liveFeed.autoRefreshOff')}
           onClick={() => setAutoRefresh(!autoRefresh)}
           color={autoRefresh ? 'success' : 'default'}
           clickable
+          role="switch"
+          aria-checked={autoRefresh}
+          aria-label={autoRefresh ? t('oracleNetwork.liveFeed.autoRefreshOn') : t('oracleNetwork.liveFeed.autoRefreshOff')}
         />
       </Box>
 
       {submissions.length === 0 ? (
-        <Paper sx={{ p: 4, textAlign: 'center' }}>
+        <Paper sx={{ p: 4, textAlign: 'center' }} role="status" aria-live="polite">
           <Typography variant="body1" color="text.secondary">
             {t('oracleNetwork.liveFeed.noActivity')}
           </Typography>
         </Paper>
       ) : (
-        <List>
+        <List aria-labelledby="live-feed-title">
           {submissions.map((submission: OracleSubmission) => (
             <ListItem
               key={submission.id}
@@ -115,8 +118,10 @@ const LiveSubmissionFeed: React.FC = () => {
                   bgcolor: 'action.hover',
                 },
               }}
+              role="listitem"
+              aria-label={`${t('oracleNetwork.liveFeed.request')} ${submission.requestId}, ${t('oracleNetwork.liveFeed.node')} ${formatAddress(submission.node.address)}, ${t('oracleNetwork.liveFeed.phase')} ${submission.phase}`}
             >
-              <Box sx={{ mr: 2 }}>
+              <Box sx={{ mr: 2 }} aria-hidden="true">
                 {getPhaseIcon(submission.phase)}
               </Box>
               <ListItemText
@@ -129,6 +134,7 @@ const LiveSubmissionFeed: React.FC = () => {
                       label={submission.phase}
                       size="small"
                       color={getStatusColor(submission.status) as any}
+                      aria-label={`${t('oracleNetwork.liveFeed.phase')}: ${submission.phase}`}
                     />
                   </Box>
                 }

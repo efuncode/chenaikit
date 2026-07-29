@@ -62,8 +62,8 @@ const DisputeFiling: React.FC<DisputeFilingProps> = ({ requestId: propRequestId 
   };
 
   return (
-    <Box>
-      <Typography variant="h6" gutterBottom>
+    <Box role="region" aria-label={t('oracleNetwork.disputes.title')}>
+      <Typography variant="h6" gutterBottom id="dispute-filing-title">
         {t('oracleNetwork.disputes.title')}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
@@ -71,19 +71,19 @@ const DisputeFiling: React.FC<DisputeFilingProps> = ({ requestId: propRequestId 
       </Typography>
 
       {success && (
-        <Alert severity="success" sx={{ mb: 2 }} onClose={() => setSuccess(false)}>
+        <Alert severity="success" sx={{ mb: 2 }} onClose={() => setSuccess(false)} role="alert" aria-live="polite">
           {t('oracleNetwork.disputes.success')}
         </Alert>
       )}
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)}>
+        <Alert severity="error" sx={{ mb: 2 }} onClose={() => setError(null)} role="alert" aria-live="assertive">
           {error}
         </Alert>
       )}
 
-      <Paper sx={{ p: 3 }}>
-        <form onSubmit={handleSubmit}>
+      <Paper sx={{ p: 3 }} component="section" aria-labelledby="dispute-filing-title">
+        <form onSubmit={handleSubmit} aria-label={t('oracleNetwork.disputes.formLabel')}>
           <TextField
             fullWidth
             label={t('oracleNetwork.disputes.requestId')}
@@ -92,6 +92,7 @@ const DisputeFiling: React.FC<DisputeFilingProps> = ({ requestId: propRequestId 
             margin="normal"
             required
             disabled={!!propRequestId}
+            aria-required="true"
           />
           <TextField
             fullWidth
@@ -104,6 +105,8 @@ const DisputeFiling: React.FC<DisputeFilingProps> = ({ requestId: propRequestId 
             required
             placeholder={t('oracleNetwork.disputes.evidencePlaceholder')}
             helperText={t('oracleNetwork.disputes.evidenceHelper')}
+            aria-required="true"
+            aria-describedby="evidence-helper"
           />
           <Button
             type="submit"
@@ -111,9 +114,10 @@ const DisputeFiling: React.FC<DisputeFilingProps> = ({ requestId: propRequestId 
             fullWidth
             sx={{ mt: 2 }}
             disabled={disputeMutation.isPending}
+            aria-busy={disputeMutation.isPending}
           >
             {disputeMutation.isPending ? (
-              <CircularProgress size={24} />
+              <CircularProgress size={24} aria-label={t('oracleNetwork.disputes.submitting')} />
             ) : (
               t('oracleNetwork.disputes.submit')
             )}

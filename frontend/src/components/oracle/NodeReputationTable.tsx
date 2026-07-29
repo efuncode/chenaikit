@@ -76,24 +76,28 @@ const NodeReputationTable: React.FC = () => {
   const paginatedNodes = sortedNodes.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
-    <Box>
-      <Typography variant="h6" gutterBottom>
+    <Box role="region" aria-label={t('oracleNetwork.nodes.title')}>
+      <Typography variant="h6" gutterBottom id="nodes-table-title">
         {t('oracleNetwork.nodes.title')}
       </Typography>
       <TableContainer component={Paper}>
-        <Table>
+        <Table aria-labelledby="nodes-table-title">
           <TableHead>
             <TableRow>
-              <TableCell>{t('oracleNetwork.nodes.address')}</TableCell>
-              <TableCell>{t('oracleNetwork.nodes.reputation')}</TableCell>
-              <TableCell>{t('oracleNetwork.nodes.stake')}</TableCell>
-              <TableCell>{t('oracleNetwork.nodes.status')}</TableCell>
-              <TableCell>{t('oracleNetwork.nodes.registeredAt')}</TableCell>
+              <TableCell scope="col">{t('oracleNetwork.nodes.address')}</TableCell>
+              <TableCell scope="col">{t('oracleNetwork.nodes.reputation')}</TableCell>
+              <TableCell scope="col">{t('oracleNetwork.nodes.stake')}</TableCell>
+              <TableCell scope="col">{t('oracleNetwork.nodes.status')}</TableCell>
+              <TableCell scope="col">{t('oracleNetwork.nodes.registeredAt')}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {paginatedNodes.map((node) => (
-              <TableRow key={node.id} hover>
+              <TableRow 
+                key={node.id} 
+                hover
+                aria-label={`${t('oracleNetwork.nodes.address')} ${formatAddress(node.address)}, ${t('oracleNetwork.nodes.reputation')} ${node.reputation}, ${t('oracleNetwork.nodes.status')} ${node.isActive ? t('oracleNetwork.nodes.active') : t('oracleNetwork.nodes.inactive')}`}
+              >
                 <TableCell>
                   <Typography variant="body2" fontFamily="monospace">
                     {formatAddress(node.address)}
@@ -101,7 +105,7 @@ const NodeReputationTable: React.FC = () => {
                 </TableCell>
                 <TableCell>
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Star fontSize="small" color={getReputationColor(node.reputation) as any} />
+                    <Star fontSize="small" color={getReputationColor(node.reputation) as any} aria-hidden="true" />
                     <Typography variant="body2" fontWeight="medium">
                       {node.reputation}
                     </Typography>
@@ -117,6 +121,7 @@ const NodeReputationTable: React.FC = () => {
                     label={node.isActive ? t('oracleNetwork.nodes.active') : t('oracleNetwork.nodes.inactive')}
                     size="small"
                     color={node.isActive ? 'success' : 'default'}
+                    aria-label={`${t('oracleNetwork.nodes.status')}: ${node.isActive ? t('oracleNetwork.nodes.active') : t('oracleNetwork.nodes.inactive')}`}
                   />
                 </TableCell>
                 <TableCell>
@@ -136,6 +141,7 @@ const NodeReputationTable: React.FC = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          aria-label={t('oracleNetwork.nodes.pagination')}
         />
       </TableContainer>
     </Box>

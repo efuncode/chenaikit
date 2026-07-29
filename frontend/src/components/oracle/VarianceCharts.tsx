@@ -121,31 +121,37 @@ const VarianceCharts: React.FC = () => {
   };
 
   return (
-    <Box>
-      <Typography variant="h6" gutterBottom>
+    <Box role="region" aria-label={t('oracleNetwork.analytics.title')}>
+      <Typography variant="h6" gutterBottom id="analytics-title">
         {t('oracleNetwork.analytics.title')}
       </Typography>
 
-      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="subtitle1" gutterBottom>
+      <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' }, gap: 3 }} aria-labelledby="analytics-title">
+        <Paper sx={{ p: 3 }} role="article" aria-label={t('oracleNetwork.analytics.submissionVariance')}>
+          <Typography variant="subtitle1" gutterBottom id="submission-variance-chart">
             {t('oracleNetwork.analytics.submissionVariance')}
           </Typography>
-          <Bar data={submissionVarianceData} options={{ responsive: true }} />
+          <Box role="img" aria-label={`${t('oracleNetwork.analytics.submissionVariance')} chart`}>
+            <Bar data={submissionVarianceData} options={{ responsive: true, plugins: { legend: { labels: { boxWidth: 12 } } } }} />
+          </Box>
         </Paper>
 
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="subtitle1" gutterBottom>
+        <Paper sx={{ p: 3 }} role="article" aria-label={t('oracleNetwork.analytics.disputeStatus')}>
+          <Typography variant="subtitle1" gutterBottom id="dispute-status-chart">
             {t('oracleNetwork.analytics.disputeStatus')}
           </Typography>
-          <Doughnut data={disputeStatusData} options={{ responsive: true }} />
+          <Box role="img" aria-label={`${t('oracleNetwork.analytics.disputeStatus')} chart`}>
+            <Doughnut data={disputeStatusData} options={{ responsive: true, plugins: { legend: { labels: { boxWidth: 12 } } } }} />
+          </Box>
         </Paper>
 
-        <Paper sx={{ p: 3, gridColumn: { xs: '1', md: '1 / -1' } }}>
-          <Typography variant="subtitle1" gutterBottom>
+        <Paper sx={{ p: 3, gridColumn: { xs: '1', md: '1 / -1' } }} role="article" aria-label={t('oracleNetwork.analytics.slashReasons')}>
+          <Typography variant="subtitle1" gutterBottom id="slash-reasons-chart">
             {t('oracleNetwork.analytics.slashReasons')}
           </Typography>
-          <Bar data={slashReasonData} options={{ responsive: true }} />
+          <Box role="img" aria-label={`${t('oracleNetwork.analytics.slashReasons')} chart`}>
+            <Bar data={slashReasonData} options={{ responsive: true, plugins: { legend: { labels: { boxWidth: 12 } } } }} />
+          </Box>
         </Paper>
       </Box>
     </Box>
